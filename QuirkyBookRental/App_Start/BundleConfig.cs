@@ -21,11 +21,15 @@ namespace QuirkyBookRental
 
             bundles.Add(new ScriptBundle("~/bundles/bookRentalJs").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/typeahead.bundle.min.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/AdminMenu.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bookdetail.css",
+                      "~/Content/typeahead.css",
+                       "~/Content/thumbnail.css",
                       "~/Content/site.css"));
         }
     }

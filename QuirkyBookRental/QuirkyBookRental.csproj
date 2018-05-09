@@ -19,7 +19,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44378</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -200,10 +200,18 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\BookAPIController.cs" />
+    <Compile Include="Controllers\Api\UsersAPIController.cs" />
     <Compile Include="Controllers\BookController.cs" />
+    <Compile Include="Controllers\BookDetailController.cs" />
+    <Compile Include="Controllers\BookRentController.cs" />
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MembershipTypeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Extensions\DateRangeAttribute.cs" />
+    <Compile Include="Extensions\ThumbnailExtension.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -211,18 +219,50 @@
     <Compile Include="Migrations\201803300131205_AddBookAndGenreClass.Designer.cs">
       <DependentUpon>201803300131205_AddBookAndGenreClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804130935520_AddPublisherToBookModel.cs" />
+    <Compile Include="Migrations\201804130935520_AddPublisherToBookModel.Designer.cs">
+      <DependentUpon>201804130935520_AddPublisherToBookModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804131023270_AddMembershipTypeToDatabase.cs" />
+    <Compile Include="Migrations\201804131023270_AddMembershipTypeToDatabase.Designer.cs">
+      <DependentUpon>201804131023270_AddMembershipTypeToDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804131034273_SeedMembershipTypeDatabase.cs" />
+    <Compile Include="Migrations\201804131034273_SeedMembershipTypeDatabase.Designer.cs">
+      <DependentUpon>201804131034273_SeedMembershipTypeDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804131402490_AddFieldsToMembershipTable.cs" />
+    <Compile Include="Migrations\201804131402490_AddFieldsToMembershipTable.Designer.cs">
+      <DependentUpon>201804131402490_AddFieldsToMembershipTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805092056171_addBookRentalModel.cs" />
+    <Compile Include="Migrations\201805092056171_addBookRentalModel.Designer.cs">
+      <DependentUpon>201805092056171_addBookRentalModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805092059211_AddRentalDurationToBookRentModel.cs" />
+    <Compile Include="Migrations\201805092059211_AddRentalDurationToBookRentModel.Designer.cs">
+      <DependentUpon>201805092059211_AddRentalDurationToBookRentModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\BookRent.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IndividualButtonPartial.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MembershipType.cs" />
+    <Compile Include="Models\ThumbnailModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utility\SD.cs" />
+    <Compile Include="ViewModels\BookRentalViewModel.cs" />
     <Compile Include="ViewModels\BookViewModel.cs" />
+    <Compile Include="ViewModels\ThumbnailBoxViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bookdetail.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\fortune.png" />
@@ -230,11 +270,15 @@
     <Content Include="Content\Images\jungle.jpg" />
     <Content Include="Content\Images\Spider.png" />
     <Content Include="Content\Images\Sunset.png" />
+    <Content Include="Content\thumbnail.css" />
+    <Content Include="Content\typeahead.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\AdminMenu.js" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -251,6 +295,10 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -301,6 +349,19 @@
     <Content Include="Views\Book\Details.cshtml" />
     <Content Include="Views\Book\Edit.cshtml" />
     <Content Include="Views\Book\Index.cshtml" />
+    <Content Include="Views\MembershipType\Create.cshtml" />
+    <Content Include="Views\MembershipType\Delete.cshtml" />
+    <Content Include="Views\MembershipType\Details.cshtml" />
+    <Content Include="Views\MembershipType\Edit.cshtml" />
+    <Content Include="Views\MembershipType\Index.cshtml" />
+    <Content Include="Views\Shared\_ThumbnailAreaPartial.cshtml" />
+    <Content Include="Views\Manage\Edit.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\BookDetail\Index.cshtml" />
+    <Content Include="Views\BookRent\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -322,6 +383,24 @@
     <EmbeddedResource Include="Migrations\201803300131205_AddBookAndGenreClass.resx">
       <DependentUpon>201803300131205_AddBookAndGenreClass.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804130935520_AddPublisherToBookModel.resx">
+      <DependentUpon>201804130935520_AddPublisherToBookModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804131023270_AddMembershipTypeToDatabase.resx">
+      <DependentUpon>201804131023270_AddMembershipTypeToDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804131034273_SeedMembershipTypeDatabase.resx">
+      <DependentUpon>201804131034273_SeedMembershipTypeDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804131402490_AddFieldsToMembershipTable.resx">
+      <DependentUpon>201804131402490_AddFieldsToMembershipTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805092056171_addBookRentalModel.resx">
+      <DependentUpon>201805092056171_addBookRentalModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805092059211_AddRentalDurationToBookRentModel.resx">
+      <DependentUpon>201805092059211_AddRentalDurationToBookRentModel.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -341,7 +420,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58030</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58030/</IISUrl>
+          <IISUrl>https://localhost:44378/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

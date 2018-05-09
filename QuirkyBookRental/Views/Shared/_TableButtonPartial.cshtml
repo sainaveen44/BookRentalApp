@@ -12,29 +12,32 @@
             GenreId = Model.GenreId,
             BookId = Model.BookId,
             CustomerId = Model.CustomerId,
-            MembershipTypeId = Model.MembershipTypeId
+            MembershipTypeId = Model.MembershipTypeId,
+            UserId=Model.UserId
         })
         @Html.Partial("_IndividualButtonPartial", new IndividualButtonPartial
-        {
-            Action = "Details",
-            ButtonType = "btn-success",
-            Glyph = "list",
-            Text = "Details Button",
-            GenreId = Model.GenreId,
-            BookId = Model.BookId,
-            CustomerId = Model.CustomerId,
-            MembershipTypeId = Model.MembershipTypeId
-        })
+   {
+       Action = "Details",
+       ButtonType = "btn-success",
+       Glyph = "list",
+       Text = "Details Button",
+       GenreId = Model.GenreId,
+       BookId = Model.BookId,
+       CustomerId = Model.CustomerId,
+       MembershipTypeId = Model.MembershipTypeId,
+       UserId = Model.UserId
+   })
         @Html.Partial("_IndividualButtonPartial", new IndividualButtonPartial
-        {
-            Action = "Delete",
-            ButtonType = "btn-danger",
-            Glyph = "trash",
-            Text = "Delete Button",
-            GenreId = Model.GenreId,
-            BookId = Model.BookId,
-            CustomerId = Model.CustomerId,
-            MembershipTypeId = Model.MembershipTypeId
-        })
+   {
+       Action = "Delete",
+       ButtonType = "btn-danger",
+       Glyph = "trash",
+       Text = "Delete Button",
+       GenreId = Model.GenreId,
+       BookId = Model.BookId,
+       CustomerId = Model.CustomerId,
+       MembershipTypeId = Model.MembershipTypeId,
+       UserId = Model.UserId
+   })
     </div>
 </td>

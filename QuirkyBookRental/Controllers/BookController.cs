@@ -73,6 +73,7 @@ namespace QuirkyBookRental.Controllers
                 ISBN = bookVM.Book.ISBN,
                 Pages = bookVM.Book.Pages,
                 Price = bookVM.Book.Price,
+                Publisher = bookVM.Book.Publisher,
                 ProductDimensions = bookVM.Book.ProductDimensions,
                 PublicationDate = bookVM.Book.PublicationDate,
                 Title = bookVM.Book.Title
@@ -113,6 +114,7 @@ namespace QuirkyBookRental.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Edit(BookViewModel bookVM)
         {
             var book = new Book
@@ -128,6 +130,7 @@ namespace QuirkyBookRental.Controllers
                 ISBN = bookVM.Book.ISBN,
                 Pages = bookVM.Book.Pages,
                 Price = bookVM.Book.Price,
+                Publisher=bookVM.Book.Publisher,
                 ProductDimensions = bookVM.Book.ProductDimensions,
                 PublicationDate = bookVM.Book.PublicationDate,
                 Title = bookVM.Book.Title
@@ -139,7 +142,7 @@ namespace QuirkyBookRental.Controllers
                 return RedirectToAction("Index");
             }
             bookVM.Genre = db.Genres.ToList();
-            return View(book);
+            return View(bookVM);
         }
 
         // GET: Book/Delete/5
